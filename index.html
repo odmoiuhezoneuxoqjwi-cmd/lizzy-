@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Lizzy</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&family=Playfair+Display:ital,wght@1,600&family=Poppins:wght@400;600;800;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body {
+      background: #05070c;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    audio { display: none; }
+
+    .app {
+      width: 100vw;
+      height: 100vh;
+      background: #05070c;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+      animation: pageIn .55s ease both;
+    }
+
+    .page.active { display: block; }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: scale(1.015); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .next {
+      position: absolute;
+      right: 38px;
+      bottom: 35px;
+      z-index: 20;
+      border: 0;
+      background: transparent;
+      color: #53b8ff;
+      font-size: clamp(48px, 8vw, 90px);
+      font-weight: 200;
+      letter-spacing: -28px;
+      cursor: pointer;
+      text-shadow: 0 0 16px rgba(83,184,255,.85);
+    }
+
+    .nextRound {
+      position: absolute;
+      right: 45px;
+      bottom: 48px;
+      z-index: 20;
+      width: 92px;
+      height: 92px;
+      border: none;
+      border-radius: 50%;
+      background: #e8b6c2;
+      color: #2b2427;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 14px 35px rgba(0,0,0,.25);
+    }
+
+    .gridDark {
+      background: #0b315e;
+      background-image:
+        linear-gradient(rgba(255,255,255,.09) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.09) 2px, transparent 2px);
+      background-size: 105px 105px;
+    }
+
+    .gridBlue {
+      background: #36a7ff;
+      background-image:
+        linear-gradient(rgba(255,255,255,.22) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.22) 2px, transparent 2px);
+      background-size: 105px 105px;
+    }
+
+    .beachBg {
+      background:
+        linear-gradient(rgba(255,220,180,.28), rgba(255,255,255,.08)),
+        url('beach.jpg') center/cover no-repeat;
+    }
+
+    .hand { font-family: 'Caveat', cursive; }
+    .cute { font-family: 'Patrick Hand', cursive; }
+    .elegant { font-family: 'Playfair Display', serif; }
+
+    /* PAGE 1 */
+    .intro {
+      background: #efe3d4;
+    }
+
+    .envelopeBg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(140deg, transparent 49.8%, rgba(0,0,0,.12) 50%, transparent 50.5%),
+        linear-gradient(35deg, transparent 49.8%, rgba(0,0,0,.09) 50%, transparent 50.5%),
+        #efe3d4;
+    }
+
+    .introNote {
+      position: absolute;
+      background: #e8d8c7;
+      color: #1b1b1b;
+      padding: 18px 28px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: clamp(20px, 2.5vw, 34px);
+      box-shadow: 0 8px 25px rgba(0,0,0,.12);
+      clip-path: polygon(2% 9%, 13% 3%, 28% 7%, 43% 2%, 58% 8%, 75% 4%, 97% 9%, 93% 30%, 99% 48%, 94% 70%, 98% 93%, 75% 96%, 58% 91%, 42% 98%, 22% 93%, 4% 97%, 8% 76%, 2% 58%, 6% 39%);
+    }
+
+    .introNote.left { left: 7%; bottom: 12%; width: 370px; transform: rotate(-2deg); }
+    .introNote.top { right: 9%; top: 10%; width: 390px; transform: rotate(2deg); font-size: clamp(18px, 2vw, 25px); }
+    .introNote.click { right: 22%; bottom: 20%; width: 270px; font-size: clamp(18px, 2vw, 25px); }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(120px, 15vw, 180px);
+      height: clamp(120px, 15vw, 180px);
+      border: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 28%, #8da2b8, #1c4267 58%, #071523 90%);
+      box-shadow: inset 0 0 22px rgba(255,255,255,.3), 0 18px 45px rgba(0,0,0,.45);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+      transition: .3s ease;
+    }
+
+    .seal:hover { transform: translate(-50%, -50%) scale(1.05); }
+    .seal::before {
+      content: '✿';
+      font-size: clamp(70px, 10vw, 120px);
+      color: #081827;
+      text-shadow: 0 2px 0 rgba(255,255,255,.35);
+    }
+
+    .flowerDecor { position: absolute; right: 2%; bottom: 0; width: 190px; opacity: .65; }
+
+    .openIntro .seal { animation: sealOpen .8s ease forwards; }
+    .openIntro .envelopeBg { animation: fadeAway 1s ease forwards; }
+
+    @keyframes sealOpen {
+      to { opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
+    }
+    @keyframes fadeAway {
+      to { opacity: 0; transform: scale(1.06); }
+    }
+
+    /* PAGE 2 CAMERA */
+    .leftWish {
+      position: absolute;
+      left: 3%;
+      top: 26%;
+      width: 28%;
+      color: #fff;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(21px, 2.35vw, 34px);
+      line-height: 1.6;
+      text-shadow: 0 3px 5px rgba(0,0,0,.35);
+    }
+
+    .rightWish {
+      position: absolute;
+      right: 4%;
+      top: 30%;
+      width: 27%;
+      color: #fff;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(22px, 2.35vw, 34px);
+      line-height: 1.7;
+      text-shadow: 0 3px 5px rgba(0,0,0,.35);
+    }
+
+    .camera {
+      position: absolute;
+      left: 50%;
+      top: 44%;
+      transform: translate(-50%, -50%);
+      width: min(46vw, 570px);
+      height: min(24vw, 300px);
+      min-width: 410px;
+      min-height: 220px;
+      background: #eee7d8;
+      border-radius: 26px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.48), inset 0 -12px 26px rgba(120,100,75,.22);
+      border: 3px solid #c9bda8;
+    }
+
+    .viewfinder {
+      position: absolute;
+      left: 24px;
+      top: 28px;
+      width: 52px;
+      height: 86px;
+      border-radius: 20px;
+      background: #0e0e0e;
+      box-shadow: inset 0 0 12px rgba(255,255,255,.2);
+    }
+
+    .camControl {
+      position: absolute;
+      left: 25px;
+      top: 125px;
+      width: 44px;
+      height: 90px;
+      border-radius: 22px;
+      border: 3px solid #a69b90;
+      background: #e1dccc;
+    }
+
+    .camScreen {
+      position: absolute;
+      left: 21.5%;
+      top: 25%;
+      width: 43%;
+      height: 56%;
+      border: 8px solid #191919;
+      border-radius: 8px;
+      background: #f2f2ee;
+      overflow: hidden;
+    }
+
+    .camScreen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lens {
+      position: absolute;
+      right: 11%;
+      top: 29%;
+      width: 21%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f5f5f5 0 18%, #777 24%, #e8e8e8 43%, #222 47%, #aaa 67%, #eee 84%);
+      box-shadow: inset 0 0 15px rgba(0,0,0,.6);
+    }
+
+    .sticker { position: absolute; font-size: clamp(18px, 2vw, 30px); }
+    .birthdayWord {
+      position: absolute;
+      left: 31%;
+      bottom: 5%;
+      font-size: clamp(62px, 8vw, 110px);
+      line-height: .75;
+      font-weight: 900;
+      color: #fff1e1;
+      text-shadow: 0 4px 0 rgba(0,0,0,.25);
+    }
+    .birthdayWord span {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(52px, 7vw, 90px);
+      color: #55b9ff;
+      font-weight: 400;
+      margin-bottom: -20px;
+    }
+
+    /* PAGE 3 */
+    .catBox {
+      position: absolute;
+      left: 6%;
+      top: 9%;
+      width: 300px;
+      height: 210px;
+      background: #fff6ee;
+      padding: 10px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      transform: rotate(-5deg);
+      clip-path: polygon(3% 6%,13% 1%,25% 5%,40% 1%,54% 6%,68% 3%,82% 7%,98% 2%,95% 21%,99% 40%,96% 60%,99% 79%,95% 96%,79% 93%,63% 99%,48% 94%,31% 98%,16% 94%,3% 99%,7% 78%,2% 61%,6% 42%,2% 25%);
+    }
+    .catBox img, .photoFrame img, .centerPolaroid img, .booth img, .film img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .centerPolaroid {
+      position: absolute;
+      left: 38%;
+      top: 12%;
+      width: 310px;
+      height: 400px;
+      background: #fff6e9;
+      padding: 16px 16px 50px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.28);
+      z-index: 3;
+    }
+
+    .photoFrame {
+      position: absolute;
+      left: 7%;
+      bottom: 10%;
+      width: 285px;
+      height: 250px;
+      background: #fff6ee;
+      padding: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+      transform: rotate(-2deg);
+      clip-path: polygon(3% 6%,13% 1%,25% 5%,40% 1%,54% 6%,68% 3%,82% 7%,98% 2%,95% 21%,99% 40%,96% 60%,99% 79%,95% 96%,79% 93%,63% 99%,48% 94%,31% 98%,16% 94%,3% 99%,7% 78%,2% 61%,6% 42%,2% 25%);
+    }
+
+    .pinkLabel {
+      position: absolute;
+      background: #e8a7b9;
+      color: #1b1b1b;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: clamp(24px, 3vw, 44px);
+      line-height: .9;
+      box-shadow: 0 8px 20px rgba(0,0,0,.16);
+    }
+
+    .spotifyCard {
+      position: absolute;
+      right: 20%;
+      top: 25%;
+      width: 275px;
+      min-height: 300px;
+      background: #f2dccc;
+      color: #111;
+      text-decoration: none;
+      padding: 28px 30px;
+      border-radius: 5px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      z-index: 4;
+      transition: .2s;
+    }
+    .spotifyCard:hover { transform: translateY(-5px); }
+    .spotifyCard h3 { font-size: 24px; margin-bottom: 6px; }
+    .spotifyCard p { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.15; margin-top: 25px; }
+    .barcode { margin-top: 22px; font-size: 34px; letter-spacing: -2px; }
+    .vinylPeek {
+      position: absolute;
+      right: -60px;
+      top: 80px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: repeating-radial-gradient(circle,#111 0 7px,#1f1f1f 7px 12px);
+      z-index: -1;
+    }
+    .ash {
+      position: absolute;
+      left: 42%;
+      bottom: 4%;
+      z-index: 5;
+      text-align: center;
+    }
+    .ashFace { font-size: 110px; }
+    .placard {
+      background: #fff0df;
+      color: #111;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-top: -20px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 25px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.2);
+    }
+    .smallText {
+      position: absolute;
+      color: #111;
+      font-family: 'Patrick Hand', cursive;
+      font-size: clamp(22px, 2.2vw, 32px);
+      line-height: 1.1;
+      z-index: 6;
+    }
+    .heartDraw { color: #d85b91; font-size: 54px; }
+
+    /* PAGE 4 */
+    .foodItem { position: absolute; filter: drop-shadow(0 14px 12px rgba(0,0,0,.28)); }
+    .shawarma { left: 3%; top: 13%; font-size: clamp(90px, 15vw, 190px); transform: rotate(-6deg); }
+    .kinder { left: 5%; bottom: 7%; width: 260px; max-width: 24vw; }
+    .cake {
+      position: absolute;
+      left: 50%;
+      top: 51%;
+      transform: translate(-50%, -50%);
+      width: min(43vw, 560px);
+      cursor: pointer;
+      z-index: 5;
+      filter: drop-shadow(0 18px 25px rgba(0,0,0,.28));
+    }
+    .cakeMsg {
+      position: absolute;
+      right: -430px;
+      top: 32%;
+      width: 360px;
+      background: #fff6e7;
+      color: #20304a;
+      padding: 28px 30px;
+      border-radius: 10px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 26px;
+      line-height: 1.18;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+      transition: .55s ease;
+      z-index: 4;
+    }
+    .cakeMsg.show { right: 8%; }
+    .toyPile {
+      position: absolute;
+      right: 4%;
+      bottom: 8%;
+      font-size: clamp(75px, 12vw, 155px);
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.22));
+    }
+
+    /* PAGE 5 */
+    .finalTitle {
+      position: absolute;
+      top: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 5vw, 68px);
+      font-style: italic;
+      color: #211719;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .bigEnvelope {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      width: min(52vw, 680px);
+      height: min(34vw, 430px);
+      background: #c9a16f;
+      border-radius: 10px;
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+    }
+    .bigEnvelope::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, transparent 49.5%, rgba(80,55,25,.3) 50%, transparent 51%),
+        linear-gradient(35deg, transparent 49.5%, rgba(80,55,25,.25) 50%, transparent 51%);
+    }
+    .letterPaper {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      width: min(48vw, 620px);
+      min-height: min(31vw, 390px);
+      background: #fff8ed;
+      color: #8f2d42;
+      padding: 34px 42px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(14px, 1.55vw, 22px);
+      line-height: 1.18;
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      z-index: 3;
+    }
+    .film {
+      position: absolute;
+      left: 7%;
+      top: 15%;
+      width: 145px;
+      height: 590px;
+      background: #111;
+      padding: 12px;
+      display: grid;
+      gap: 9px;
+      transform: rotate(-8deg);
+      box-shadow: 0 14px 28px rgba(0,0,0,.3);
+    }
+    .film img { height: 130px; object-fit: cover; }
+    .vinyl {
+      position: absolute;
+      right: 11%;
+      top: 20%;
+      width: min(23vw, 270px);
+      height: min(23vw, 270px);
+      min-width: 165px;
+      min-height: 165px;
+      border-radius: 50%;
+      background: repeating-radial-gradient(circle, #111 0 8px, #1d1d1d 8px 13px);
+      box-shadow: 0 16px 35px rgba(0,0,0,.45);
+      animation: spin 8s linear infinite;
+      cursor: pointer;
+      z-index: 4;
+    }
+    .vinyl::before {
+      content: '';
+      position: absolute;
+      inset: 34%;
+      border-radius: 50%;
+      background: #f7e3ca url('center-photo.png') center/cover no-repeat;
+    }
+    .vinyl:hover { filter: drop-shadow(0 0 18px rgba(255,255,255,.8)); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .playlistText {
+      position: absolute;
+      right: 10%;
+      bottom: 18%;
+      color: #2b1d1f;
+      font-family: 'Patrick Hand', cursive;
+      font-size: clamp(22px, 2.6vw, 36px);
+      text-align: center;
+    }
+    .openPlaylist {
+      position: absolute;
+      right: 10.5%;
+      bottom: 9%;
+      color: #fff;
+      background: #8e5967;
+      text-decoration: none;
+      padding: 13px 32px;
+      border-radius: 6px;
+      font-size: 20px;
+      z-index: 5;
+    }
+    .orchid { position: absolute; left: 28%; top: 22%; font-size: 110px; z-index: 4; transform: rotate(-12deg); }
+    .stars { position: absolute; left: 62%; top: 25%; font-size: 60px; color: #d5ac35; z-index: 4; }
+    .bow { position: absolute; left: 58%; bottom: 15%; font-size: 80px; z-index: 4; }
+
+    @media (max-width: 800px) {
+      .leftWish { left: 4%; width: 38%; top: 22%; font-size: 22px; }
+      .rightWish { right: 4%; width: 35%; top: 24%; font-size: 21px; }
+      .camera { min-width: 350px; min-height: 190px; top: 50%; }
+      .birthdayWord { left: 20%; font-size: 62px; }
+      .centerPolaroid { width: 240px; height: 330px; left: 34%; }
+      .spotifyCard { right: 7%; top: 37%; width: 220px; }
+      .catBox { width: 210px; height: 155px; }
+      .photoFrame { width: 210px; height: 180px; }
+      .ashFace { font-size: 75px; }
+      .shawarma { font-size: 95px; }
+      .kinder { width: 160px; max-width: none; }
+      .cake { width: 72vw; }
+      .toyPile { font-size: 90px; }
+      .finalTitle { font-size: 31px; }
+      .film { left: 2%; width: 82px; height: 420px; }
+      .film img { height: 91px; }
+      .letterPaper { width: 68vw; font-size: 13px; }
+      .bigEnvelope { width: 72vw; height: 45vw; }
+      .playlistText { right: 4%; bottom: 18%; }
+      .openPlaylist { right: 4%; bottom: 10%; }
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    FILE NAMES TO UPLOAD IN GITHUB:
+    1. index.html  -> this file
+    2. song.mp3    -> your background song file, Those Eyes
+    3. beach.jpg   -> peaceful beach background image
+    4. cat.gif     -> cute cat kissing gif
+    5. camera-photo.png   -> saree photo inside camera on page 2
+    6. favorite-photo.png -> favorite person photo on page 3
+    7. center-photo.png   -> center photo on page 3 and vinyl center
+    8. booth1.png, booth2.png, booth3.png -> photo booth strip on last page
+    9. cake.png    -> birthday cake image
+    10. kinder.png -> Kinder Joy image
+  -->
+
+  <audio id="bgm" loop>
+    <source src="song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <main class="app">
+    <!-- PAGE 1 -->
+    <section class="page intro active" id="page1">
+      <div class="envelopeBg"></div>
+      <div class="introNote left">happy birthday<br>to the kindest soul<br>with the most<br>beautiful heart ♡</div>
+      <div class="introNote top">this little space is<br>all about you today 💙</div>
+      <div class="introNote click">click the seal<br>to begin ↝</div>
+      <button class="seal" onclick="openSeal()" aria-label="open birthday seal"></button>
+      <div class="flowerDecor">𓇢𓆸<br>𓇢𓆸<br>𓇢𓆸</div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="page gridDark" id="page2">
+      <p class="leftWish">Happy Birthday to the prettiest part of my life 💖<br><br>I’m lucky to have you in my lifeee, uh are SPECIAL person in my lifeeeee 😭😭💗💗</p>
+      <div class="camera">
+        <div class="viewfinder"></div>
+        <div class="camControl"></div>
+        <div class="camScreen"><img src="camera-photo.png" alt="Lizzy in camera"></div>
+        <div class="lens"></div>
+        <span class="sticker" style="left: 90px; top: 22px;">💙</span>
+        <span class="sticker" style="right: 35px; top: 26px;">💎</span>
+        <span class="sticker" style="right: 28px; bottom: 32px;">💙</span>
+      </div>
+      <p class="rightWish">may this year be full of little wins, warm conversations, and moments that remind you just how loved you are.</p>
+      <div class="birthdayWord"><span>happy</span>Birthday</div>
+      <button class="next" onclick="nextPage()">››</button>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section class="page beachBg" id="page3">
+      <div class="catBox"><img src="cat.gif" alt="cute cat"></div>
+      <div class="smallText" style="left: 26%; top: 7%;">i am so grateful to have<br>you as my friend</div>
+      <div class="smallText" style="right: 23%; top: 8%; background:#e8d1b8; padding: 8px 22px; border-radius:999px;">You’re perfect ♡</div>
+      <div class="centerPolaroid"><img src="center-photo.png" alt="Lizzy center photo"></div>
+      <a class="spotifyCard" href="https://open.spotify.com/playlist/5SOrhe1pBRST85BTS6oqXe?si=01fc9ad94a2d46bd&pt=e95001c1dcd337e0ac34f2e30d2840cc" target="_blank">
+        <div class="vinylPeek"></div>
+        <h3>☊ Lizzy Playlist</h3>
+        <small>a playlist for you &lt;3</small>
+        <p>ur voice = my fav song.....</p>
+        <div class="barcode">▁▂▃▅▆▇▆▅▃▂▁</div>
+        <small>Click to listen on Spotify</small>
+      </a>
+      <div class="photoFrame"><img src="favorite-photo.png" alt="favorite person"></div>
+      <div class="pinkLabel" style="left: 10%; bottom: 33%;">Favorite<br>Person ↴</div>
+      <div class="ash"><div class="ashFace">👱🏻‍♂️</div><div class="placard">Happy Birthday<br>Lizzy 💗</div></div>
+      <div class="smallText" style="left: 19%; top: 46%;">you are the most<br>beautiful soul <span class="heartDraw">♡</span></div>
+      <div class="smallText" style="right: 21%; bottom: 12%;">you are the kindest<br>person i know and<br>you deserve everything<br>good in this world ♡</div>
+      <button class="nextRound" onclick="nextPage()">press<br>♡</button>
+    </section>
+
+    <!-- PAGE 4 -->
+    <section class="page beachBg" id="page4">
+      <div class="foodItem shawarma">🌯</div>
+      <div class="smallText" style="left: 25%; top: 18%;">for your<br>shawarma<br>runs & cravings ♡</div>
+      <img class="foodItem kinder" src="kinder.png" alt="Kinder Joy">
+      <div class="smallText" style="left: 20%; bottom: 20%;">for your<br>sweet tooth<br>& cute moods ♡</div>
+      <img class="cake" src="cake.png" alt="Birthday cake" onclick="toggleCakeMsg()">
+      <div class="smallText" style="right: 23%; top: 18%; background:#f0decb; padding:12px 25px; border-radius:8px; transform:rotate(2deg);">all yourss 💗</div>
+      <div class="cakeMsg" id="cakeMsg">This whole page, this little surprise, and this birthday mood is all yourss 💗<br><br>Stay happy, stay chaotic, and keep being Lizzy.</div>
+      <div class="toyPile">🧸🪀🚗🪁🎲</div>
+      <button class="next" onclick="nextPage()">››</button>
+    </section>
+
+    <!-- PAGE 5 -->
+    <section class="page finalPage beachBg" id="page5">
+      <div class="finalTitle">here’s a letter from me to you &lt;3</div>
+      <div class="film">
+        <img src="booth1.png" alt="photo booth 1">
+        <img src="booth2.png" alt="photo booth 2">
+        <img src="booth3.png" alt="photo booth 3">
+        <img src="booth1.png" alt="photo booth 4">
+      </div>
+      <div class="bigEnvelope"></div>
+      <div class="letterPaper">
+        I really don’t know whyyy this happens only in your case 😭😭😭😭<br>
+        I get so scared to text you, but tbh… I want to talk to you all day. BUt<br>
+        My overthinking mind keeps saying “what if you mess things up?” or “what if she gets bored of you?” and that’s why I end up js seeing your posts and highlights instead of txting you.<br><br>
+        I genuinely don’t know how you became such a special person to me in such a short time, but I’m really happy that you did 💗<br>
+        I just hope this stays forever.<br><br>
+        Once again, happy birthday my girl 💓
+      </div>
+      <div class="orchid">🌸</div>
+      <div class="stars">✦✦<br>✦</div>
+      <div class="bow">🎀</div>
+      <a class="vinyl" href="https://open.spotify.com/playlist/5SOrhe1pBRST85BTS6oqXe?si=01fc9ad94a2d46bd&pt=e95001c1dcd337e0ac34f2e30d2840cc" target="_blank" aria-label="Open Spotify playlist"></a>
+      <div class="playlistText">a playlist for you ♡<br>(those eyes on repeat)</div>
+      <a class="openPlaylist" href="https://open.spotify.com/playlist/5SOrhe1pBRST85BTS6oqXe?si=01fc9ad94a2d46bd&pt=e95001c1dcd337e0ac34f2e30d2840cc" target="_blank">click to open playlist</a>
+    </section>
+  </main>
+
+  <script>
+    let page = 1;
+    const totalPages = 5;
+
+    function playMusic() {
+      const audio = document.getElementById('bgm');
+      audio.volume = 0.55;
+      audio.play().catch(() => {});
+    }
+
+    function showPage(number) {
+      document.querySelectorAll('.page').forEach(pageEl => pageEl.classList.remove('active'));
+      document.getElementById('page' + number).classList.add('active');
+    }
+
+    function openSeal() {
+      playMusic();
+      document.getElementById('page1').classList.add('openIntro');
+      setTimeout(() => {
+        page = 2;
+        showPage(page);
+      }, 900);
+    }
+
+    function nextPage() {
+      playMusic();
+      page = Math.min(totalPages, page + 1);
+      showPage(page);
+    }
+
+    function toggleCakeMsg() {
+      document.getElementById('cakeMsg').classList.toggle('show');
+    }
+  </script>
+</body>
+</html>
